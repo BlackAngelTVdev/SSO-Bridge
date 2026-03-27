@@ -7,7 +7,7 @@ class SSOBridge {
     }
 
     this.apiKey = options.apiKey;
-    this.ssoPortal = options.ssoPortal || "https://apps.pm2etml.ch/auth/";
+    this.ssoPortal = options.ssoPortal;
   }
 
   buildUrl(pathname, params = {}) {
