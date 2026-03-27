@@ -17,7 +17,7 @@ Ce package fournit des helpers SSO orientés AdonisJS tout en conservant un coeu
 	 npm install
 2. Ajoutez les variables d'environnement:
 	 API_KEY=YOUR_SSO_API_KEY
-	 SSO_PORTAL=https://apps.pm2etml.ch/auth/
+	 SSO_PORTAL=SSO_PORTAL
 
 ## Utilisation Adonis
 
