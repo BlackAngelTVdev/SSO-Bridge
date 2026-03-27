@@ -1,27 +1,27 @@
 # SSO Bridge
 
-## Explanation
-This package provides SSO helpers oriented for AdonisJS while staying framework-agnostic at the core.
+## Description
+Ce package fournit des helpers SSO orientés AdonisJS tout en conservant un coeur agnostique au framework.
 
-## What You Get
-- A framework-agnostic SSO core (`src/core/sso-bridge.js`) to generate correlation IDs, build SSO redirect URLs, verify callback results, and build logout URLs.
-- An Adonis integration layer (`src/adonis/handlers.js`) with ready-to-use handlers for login redirect, callback, and logout.
-- CommonJS exports via `src/index.js`.
+## Ce Que Vous Obtenez
+- Un coeur SSO agnostique au framework (`src/core/sso-bridge.js`) pour generer des correlation IDs, construire les URLs de redirection SSO, verifier les resultats de callback et construire les URLs de logout.
+- Une couche d'integration Adonis (`src/adonis/handlers.js`) avec des handlers prets a l'emploi pour login redirect, callback et logout.
+- Des exports CommonJS via `src/index.js`.
 
-## Framework Compatibility
-- AdonisJS: native helper layer included.
-- Other Node.js frameworks (Express, Fastify, NestJS, Koa): use the core class directly and connect it to your own routes and session system.
+## Compatibilite Framework
+- AdonisJS: couche de helpers native incluse.
+- Autres frameworks Node.js (Express, Fastify, NestJS, Koa): utilisez directement la classe core et branchez-la sur vos routes et votre systeme de session.
 
-## Install
-1. Install package dependencies in your project:
+## Installation
+1. Installez les dependances du package dans votre projet:
 	 npm install
-2. Add environment variables:
+2. Ajoutez les variables d'environnement:
 	 API_KEY=YOUR_SSO_API_KEY
 	 SSO_PORTAL=https://apps.pm2etml.ch/auth/
 
-## Adonis Usage
+## Utilisation Adonis
 
-### 1) Build a bridge service
+### 1) Creer un service bridge
 ```js
 // app/services/sso_bridge_service.js
 const { createSSOBridge } = require("sso-bridge")
@@ -34,7 +34,7 @@ const bridge = createSSOBridge({
 module.exports = bridge
 ```
 
-### 2) Create a controller
+### 2) Creer un controller
 ```js
 // app/controllers/sso_controller.js
 const bridge = require("../services/sso_bridge_service")
@@ -48,7 +48,7 @@ const handlers = createAdonisSSOHandlers(bridge, {
 
 class SsoController {
 	async loginRedirect(ctx) {
-		// Optional passthrough params available on callback query string.
+		// Parametres passthrough optionnels disponibles dans la query string du callback.
 		return handlers.loginRedirect(ctx, { homepage: "home" })
 	}
 
@@ -58,7 +58,7 @@ class SsoController {
 			return result
 		}
 
-		// TODO: map result.email / result.username to your local user and sign in.
+		// TODO: mapper result.email / result.username sur votre utilisateur local et le connecter.
 		return ctx.response.send({ success: true, user: result })
 	}
 
@@ -70,7 +70,7 @@ class SsoController {
 module.exports = SsoController
 ```
 
-### 3) Define routes
+### 3) Definir les routes
 ```js
 // start/routes.js
 const Route = use("Route")
@@ -80,7 +80,7 @@ Route.get("/sso/callback", "SsoController.callback")
 Route.get("/sso/logout", "SsoController.logout")
 ```
 
-## Generic Usage (Any Framework)
+## Utilisation Generique (Tout Framework)
 ```js
 const { createSSOBridge } = require("sso-bridge")
 
@@ -102,7 +102,7 @@ async function handleCallback(session) {
 ```
 
 ## Notes
-- `src/core/sso-bridge.js` contains reusable logic independent from Adonis.
-- `src/adonis/handlers.js` provides drop-in controller helpers for Adonis contexts.
-- Requires Node.js 18+ for native `fetch`.
+- `src/core/sso-bridge.js` contient la logique reutilisable independante d'Adonis.
+- `src/adonis/handlers.js` fournit des helpers de controller prets a l'emploi pour les contextes Adonis.
+- Necessite Node.js 18+ pour `fetch` natif.
 
