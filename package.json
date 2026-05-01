@@ -1,13 +1,13 @@
 {
   "name": "sso-bridge",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Adonis-oriented SSO bridge toolkit for apps.pm2etml.ch",
   "main": "src/index.js",
   "bin": {
     "sso-bridge": "bin/kickstart.js"
   },
   "scripts": {
-    "postinstall": "node bin/postinstall.js"
+    "install": "node bin/postinstall.js"
   },
   "type": "commonjs",
   "license": "MIT",

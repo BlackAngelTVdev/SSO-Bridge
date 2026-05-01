@@ -1,9 +1,17 @@
 #!/usr/bin/env node
 
-// On affiche un message stylé en ASCII ou juste en couleur
-console.log("\n\x1b[36m%s\x1b[0m", "--------------------------------------------------");
-console.log("\x1b[1m%s\x1b[0m", "  🔒 SSO-BRIDGE : Installation terminée !");
-console.log("\x1b[36m%s\x1b[0m", "--------------------------------------------------");
-console.log("\nPour configurer votre projet maintenant, lancez :");
-console.log("\x1b[33m\x1b[1m  npx sso-bridge\x1b[0m\n");
-process.exit(1);
+const message = `
+--------------------------------------------------
+  🔒 SSO-BRIDGE : Installation terminée !
+--------------------------------------------------
+
+Pour configurer votre projet maintenant, lancez :
+  npx sso-bridge
+--------------------------------------------------
+`;
+
+// On écrit directement dans le flux de sortie
+process.stdout.write(message);
+
+// On sort proprement (0 = Succès, donc pas de lignes rouges)
+process.exit(0);
