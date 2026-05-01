@@ -2,15 +2,25 @@
 const { exec } = require("child_process");
 const path = require("path");
 
-// On ne met pas de console.log ici (npm les cache de toute façon)
-// On lance directement une nouvelle fenêtre CMD sous Windows
-const kickstartPath = path.join(__dirname, "kickstart.js");
+// On normalise le chemin et on s'assure qu'il utilise des / pour éviter les bugs d'escape
+const kickstartPath = path.resolve(__dirname, "kickstart.js").replace(/\\/g, "/");
 
 if (process.platform === "win32") {
-  // Ouvre une nouvelle fenêtre qui reste ouverte après l'exécution (/K)
-  exec(`start cmd.exe /K "node \\"${kickstartPath}\\""`);
+  /**
+   * La syntaxe "start" de Windows est spéciale :
+   * 1. Le premier "" est pour le titre de la fenêtre (obligatoire si on utilise des quotes après).
+   * 2. On utilise node "${kickstartPath}" sans rajouter d'escapes inutiles.
+   */
+  const command = `start "" cmd.exe /K "node \\"${kickstartPath}\\""`;
+  
+  exec(command, (err) => {
+    if (err) {
+      // Si vraiment ça rate, on laisse une trace silencieuse
+      process.exit(0);
+    }
+    process.exit(0);
+  });
 } else {
-  // Sur Linux/Mac, on ne peut pas forcer une fenêtre aussi facilement, 
-  // donc on laisse juste le message (ils ont souvent moins de soucis de logs)
-  console.log("\n🚀 Tapez 'npx sso-bridge' pour configurer.\n");
+  console.log("\n🚀 Installation terminée. Lancez 'npx sso-bridge' pour configurer.\n");
+  process.exit(0);
 }
