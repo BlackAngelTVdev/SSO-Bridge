@@ -1,29 +1,27 @@
 #!/usr/bin/env node
-
 const { spawn } = require("child_process");
+const path = require("path");
 
-// Detect interactive terminal
 const isInteractive = Boolean(process.stdin.isTTY && process.stdout.isTTY);
 
 if (!isInteractive) {
-  console.log("Skipping interactive postinstall: no TTY detected.");
   process.exit(0);
 }
 
 const initCwd = process.env.INIT_CWD || process.cwd();
-console.log(`Running interactive SSO Bridge kickstart in ${initCwd}`);
 
-const child = spawn("npx", ["sso-bridge"], {
+// On cible directement le fichier local au lieu d'utiliser npx
+// __dirname est le dossier 'bin' de ton package
+const kickstartPath = path.join(__dirname, "kickstart.js");
+
+console.log(`🚀 Initialisation de SSO Bridge...`);
+
+const child = spawn("node", [kickstartPath], {
   stdio: "inherit",
-  cwd: initCwd,
+  cwd: initCwd, // On reste dans le dossier de l'utilisateur
   shell: true,
 });
 
 child.on("close", (code) => {
   process.exit(code);
-});
-
-child.on("error", (err) => {
-  console.error("Failed to run npx sso-bridge:", err);
-  process.exit(1);
 });
