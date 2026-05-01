@@ -9,6 +9,8 @@
     "check": "node -e \"require('./src')\"",
     "kickstart": "node bin/kickstart.js",
     "postinstall": "node ./bin/postinstall.js"
+  },
+  "keywords": [
     "sso",
     "bridge",
     "express"
