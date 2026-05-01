@@ -6,9 +6,9 @@
   "types": "src/index.d.ts",
   "type": "commonjs",
   "scripts": {
-    "check": "node -e \"require('./src')\""
-  },
-  "keywords": [
+    "check": "node -e \"require('./src')\"",
+    "kickstart": "node bin/kickstart.js",
+    "postinstall": "node ./bin/postinstall.js"
     "sso",
     "bridge",
     "express"
